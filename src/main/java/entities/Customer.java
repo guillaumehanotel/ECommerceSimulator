@@ -20,7 +20,7 @@ public class Customer extends Person {
         this.cart = new Cart();
     }
 
-    public boolean addToCart(Product product) {
-        return false;
+    public void addToCart(int quantity, Product product) {
+
     }
 }
