@@ -2,10 +2,12 @@ package entities;
 
 import exceptions.InsufficientStockException;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CustomerTest {
     private ArrayList<Product> products;
@@ -68,7 +70,7 @@ class CustomerTest {
         this.customer1.addToCart(product2bisQuantity, product2);
         int totalQuantity = product2Quantity + product2bisQuantity;
 
-        int product2CartQuantity= customer1.getCart().get(product2);
+        int product2CartQuantity = customer1.getCart().get(product2);
 
         assertEquals(totalQuantity, product2CartQuantity);
 
@@ -79,7 +81,7 @@ class CustomerTest {
         Product product1 = products.get(0);
         int product1Quantity = 50;
         this.customer1.addToCart(product1Quantity, product1);
-        int expectedCartSize=0;
+        int expectedCartSize = 0;
 
         assertEquals(expectedCartSize, customer1.getCart().size());
     }
@@ -89,9 +91,21 @@ class CustomerTest {
         Product product1 = products.get(0);
         int product1Quantity = 16;
 
-
         assertThrows(InsufficientStockException.class, () -> {
             this.customer1.addToCart(product1Quantity, product1);
+        });
+    }
+
+    @Test
+    public void isExceptionRaisedWhenTotalQuantityIsHigherThanStockQuantityWhenProductAddedToCartMultipleTimes() throws InsufficientStockException {
+        Product product1 = products.get(0);
+        int product1Quantity = 10;
+        int product1BisQuantity = 10;
+
+        this.customer1.addToCart(product1Quantity, product1);
+
+        assertThrows(InsufficientStockException.class, () -> {
+            this.customer1.addToCart(product1BisQuantity, product1);
         });
     }
 
