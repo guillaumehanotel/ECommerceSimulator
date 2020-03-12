@@ -22,7 +22,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isCartSumShouldBeEqualToPriceSumOfProductsWhenProductAddedToCart() {
+    public void isCartSumShouldBeEqualToPriceSumOfProductsWhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 3;
         Product product2 = products.get(1);
@@ -42,7 +42,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isQuantityHigherThanZeroWhenProductAddedToCart() {
+    public void isQuantityHigherThanZeroWhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 3;
         Product product2 = products.get(1);
@@ -60,7 +60,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityIncrementedWhenProductAddMultipleTimes() {
+    public void isProductQuantityIncrementedWhenProductAddMultipleTimes() throws InsufficientStockException {
         Product product2 = products.get(1);
         int product2Quantity = 2;
         int product2bisQuantity = 1;
@@ -75,7 +75,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isQuantityNotHigherThanMaxQuantityWhenProductAddedToCart() {
+    public void isQuantityNotHigherThanMaxQuantityWhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 50;
         this.customer1.addToCart(product1Quantity, product1);
