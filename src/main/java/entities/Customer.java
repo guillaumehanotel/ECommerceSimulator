@@ -3,6 +3,9 @@ package entities;
 import exceptions.InsufficientStockException;
 import exceptions.ProductNotFoundInCartException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Classe représentant un compte enregistré auprès du site marchand
  */
@@ -11,64 +14,42 @@ public class Customer extends Person {
     private String email;
     private String pseudo;
     private String password;
-    private Cart cart;
+    private ShoppingCart shoppingCart;
+    private List<Order> ordersHistory;
 
     public Customer(String lastname, String firstname, String email, String pseudo, String password) {
         super(lastname, firstname);
         this.email = email;
         this.pseudo = pseudo;
         this.password = password;
-        this.cart = new Cart();
+        this.shoppingCart = new ShoppingCart();
+        this.ordersHistory = new ArrayList<>();
     }
 
     public void addToCart(int quantity, Product product) throws InsufficientStockException {
-        int updatedQuantity = cart.getOrDefault(product, 0) + quantity;
+        int updatedQuantity = (shoppingCart.containsKey(product.getId()) ? shoppingCart.get(product.getId()).getQuantity() : 0) + quantity;
         if (updatedQuantity > product.getStock()) {
             throw new InsufficientStockException();
         }
         if (updatedQuantity > 0 && quantity <= Product.MAX_QUANTITY) {
-            cart.put(product, updatedQuantity);
+            shoppingCart.put(product.getId(), new LineItem(updatedQuantity, product));
         }
     }
 
     public void removeFromCart(int quantity, Product product) throws ProductNotFoundInCartException {
-        if(!cart.containsKey(product)) {
+        if(!shoppingCart.containsKey(product.getId())) {
             throw new ProductNotFoundInCartException();
         }
-        int leftQuantity = cart.get(product) - quantity;
+        int leftQuantity = shoppingCart.get(product.getId()).getQuantity() - quantity;
         if(leftQuantity <= 0) {
-            cart.remove(product);
+            shoppingCart.remove(product.getId());
         } else {
-            cart.put(product, leftQuantity);
+            shoppingCart.put(product.getId(), new LineItem(leftQuantity, product));
         }
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPseudo() {
-        return pseudo;
-    }
-
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Cart getCart() {
-        return cart;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
 }

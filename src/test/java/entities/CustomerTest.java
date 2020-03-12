@@ -1,23 +1,25 @@
 package entities;
 
+import exceptions.EmptyCartException;
 import exceptions.InsufficientStockException;
 import exceptions.ProductNotFoundInCartException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
-    private ArrayList<Product> products;
+    private List<Product> products;
     private Customer customer1;
 
     public CustomerTest() {
         this.products = new ArrayList<Product>() {{
-            add(new Product(1, "Aspirateur", 400.50, "Un aspirateur professionnel", 15));
-            add(new Product(2, "Balai", 15.0, "Un balai espagnol", 16));
-            add(new Product(3, "PQ", 1.49, "Attention à la pénurie", 2));
+            add(new Product("Aspirateur", 400.50, "Un aspirateur professionnel", 15));
+            add(new Product("Balai", 15.0, "Un balai espagnol", 16));
+            add(new Product("PQ", 1.49, "Attention à la pénurie", 2));
         }};
 
         this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny", "toto1234");
@@ -35,13 +37,14 @@ class CustomerTest {
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product3Quantity, product3);
 
-        double totalProductPrice = (product1.getPrice() * product1Quantity) + (product2.getPrice() * product2Quantity) + (product3.getPrice() * product3Quantity);
+        double expectedTotalProductPrice = (product1.getPrice() * product1Quantity) + (product2.getPrice() * product2Quantity) + (product3.getPrice() * product3Quantity);
         double totalCartPrice = 0.0;
 
-        for (Map.Entry<Product, Integer> entry : this.customer1.getCart().entrySet()) {
-            totalCartPrice += entry.getKey().getPrice() * entry.getValue();
+        for (Map.Entry<Integer, LineItem> entry : this.customer1.getShoppingCart().entrySet()) {
+            LineItem lineItem = entry.getValue();
+            totalCartPrice += lineItem.getProduct().getPrice() * lineItem.getQuantity();
         }
-        assertEquals(totalProductPrice, totalCartPrice);
+        assertEquals(expectedTotalProductPrice, totalCartPrice);
     }
 
     @Test
@@ -57,9 +60,9 @@ class CustomerTest {
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product3Quantity, product3);
 
-        int numberOfProducts = 2;
+        int expectedNumberOfProducts = 2;
 
-        assertEquals(numberOfProducts, customer1.getCart().size());
+        assertEquals(expectedNumberOfProducts, customer1.getShoppingCart().size());
     }
 
     @Test
@@ -70,10 +73,10 @@ class CustomerTest {
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product2bisQuantity, product2);
 
-        int totalQuantity = product2Quantity + product2bisQuantity;
-        int product2CartQuantity = customer1.getCart().get(product2);
+        int expectedTotalQuantity = product2Quantity + product2bisQuantity;
+        int product2CartQuantity = customer1.getShoppingCart().get(product2.getId()).getQuantity();
 
-        assertEquals(totalQuantity, product2CartQuantity);
+        assertEquals(expectedTotalQuantity, product2CartQuantity);
     }
 
     @Test
@@ -83,7 +86,7 @@ class CustomerTest {
         this.customer1.addToCart(product1Quantity, product1);
         int expectedCartSize = 0;
 
-        assertEquals(expectedCartSize, customer1.getCart().size());
+        assertEquals(expectedCartSize, customer1.getShoppingCart().size());
     }
 
     @Test
@@ -91,9 +94,7 @@ class CustomerTest {
         Product product1 = products.get(0);
         int product1Quantity = 16;
 
-        assertThrows(InsufficientStockException.class, () -> {
-            this.customer1.addToCart(product1Quantity, product1);
-        });
+        assertThrows(InsufficientStockException.class, () -> this.customer1.addToCart(product1Quantity, product1));
     }
 
     @Test
@@ -104,9 +105,7 @@ class CustomerTest {
 
         this.customer1.addToCart(product1Quantity, product1);
 
-        assertThrows(InsufficientStockException.class, () -> {
-            this.customer1.addToCart(product1BisQuantity, product1);
-        });
+        assertThrows(InsufficientStockException.class, () -> this.customer1.addToCart(product1BisQuantity, product1));
     }
 
     @Test
@@ -114,9 +113,7 @@ class CustomerTest {
         Product product1 = products.get(0);
         int product1Quantity = 10;
 
-        assertThrows(ProductNotFoundInCartException.class, () -> {
-            this.customer1.removeFromCart(product1Quantity, product1);
-        });
+        assertThrows(ProductNotFoundInCartException.class, () -> this.customer1.removeFromCart(product1Quantity, product1));
     }
 
     @Test
@@ -126,7 +123,7 @@ class CustomerTest {
         this.customer1.addToCart(product1Quantity, product1);
         this.customer1.removeFromCart(product1Quantity, product1);
 
-        assertNull(customer1.getCart().get(product1));
+        assertNull(customer1.getShoppingCart().get(product1.getId()));
     }
 
     @Test
@@ -138,29 +135,29 @@ class CustomerTest {
         int removedQuantity = 6;
         this.customer1.removeFromCart(removedQuantity, product1);
 
-        Integer expectedLeftQuantity = product1Quantity - removedQuantity;
+        int expectedLeftQuantity = product1Quantity - removedQuantity;
 
-        assertEquals(expectedLeftQuantity, customer1.getCart().get(product1));
+        assertEquals(expectedLeftQuantity, customer1.getShoppingCart().get(product1.getId()).getQuantity());
     }
 
-    @Test
-    public void isCartNotEmptyWhenStartValidateCart() {
-
-    }
-
-    @Test
-    public void isAddressFilledWhenValidateCart() {
-
-    }
-
-    @Test
-    public void isCartEmptyAfterValidateCart() {
-
-    }
-
-    @Test
-    public void isCommandCorrectWhenValidateCart() {
-
-    }
+//    @Test
+//    public void isCartNotEmptyWhenStartValidateCart() {
+//        assertThrows(EmptyCartException.class, () -> customer1.makeOrder(null, null));
+//    }
+//
+//    @Test
+//    public void isAddressFilledWhenValidateCart() {
+//
+//    }
+//
+//    @Test
+//    public void isCartEmptyAfterValidateCart() {
+//
+//    }
+//
+//    @Test
+//    public void isCommandCorrectWhenValidateCart() {
+//
+//    }
 
 }
