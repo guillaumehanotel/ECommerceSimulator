@@ -1,6 +1,7 @@
 package entities;
 
 import exceptions.InsufficientStockException;
+import exceptions.ProductNotFoundInCartException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -109,7 +110,17 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductAbsentWhenRemovedFromCart() throws InsufficientStockException {
+    public void isProductPresentBeforeRemovedFromCart() {
+        Product product1 = products.get(0);
+        int product1Quantity = 10;
+
+        assertThrows(ProductNotFoundInCartException.class, () -> {
+            this.customer1.removeFromCart(product1Quantity, product1);
+        });
+    }
+
+    @Test
+    public void isProductAbsentAfterRemovedFromCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         this.customer1.addToCart(product1Quantity, product1);
