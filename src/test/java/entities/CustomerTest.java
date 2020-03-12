@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.InsufficientStockException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +13,7 @@ class CustomerTest {
 
     public CustomerTest() {
         this.products = new ArrayList<Product>() {{
-            add(new Product(1, "Aspirateur", 400.50, "Un aspirateur professionnel", 3));
+            add(new Product(1, "Aspirateur", 400.50, "Un aspirateur professionnel", 15));
             add(new Product(2, "Balai", 15.0, "Un balai espagnol", 16));
             add(new Product(3, "PQ", 1.49, "Attention à la pénurie", 2));
         }};
@@ -85,7 +86,13 @@ class CustomerTest {
 
     @Test
     public void isExceptionRaisedWhenQuantityIsHigherThanStockQuantityWhenProductAddedToCart() {
+        Product product1 = products.get(0);
+        int product1Quantity = 16;
 
+
+        assertThrows(InsufficientStockException.class, () -> {
+            this.customer1.addToCart(product1Quantity, product1);
+        });
     }
 
     @Test
