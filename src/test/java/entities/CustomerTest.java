@@ -60,6 +60,16 @@ class CustomerTest {
 
     @Test
     public void isProductQuantityIncrementedWhenProductAddMultipleTimes() {
+        Product product2 = products.get(1);
+        int product2Quantity = 2;
+        int product2bisQuantity = 1;
+        this.customer1.addToCart(product2Quantity, product2);
+        this.customer1.addToCart(product2bisQuantity, product2);
+        int totalQuantity = product2Quantity + product2bisQuantity;
+
+        int product2CartQuantity= customer1.getCart().get(product2);
+
+        assertEquals(totalQuantity, product2CartQuantity);
 
     }
 
