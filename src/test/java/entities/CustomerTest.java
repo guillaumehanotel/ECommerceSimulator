@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
     private ArrayList<Product> products;
@@ -37,6 +36,7 @@ class CustomerTest {
 
         double totalProductPrice = (product1.getPrice() * product1Quantity) + (product2.getPrice() * product2Quantity) + (product3.getPrice() * product3Quantity);
         double totalCartPrice = 0.0;
+
         for (Map.Entry<Product, Integer> entry : this.customer1.getCart().entrySet()) {
             totalCartPrice += entry.getKey().getPrice() * entry.getValue();
         }
@@ -51,14 +51,14 @@ class CustomerTest {
         int product2Quantity = 2;
         Product product3 = products.get(2);
         int product3Quantity = 0;
+
         this.customer1.addToCart(product1Quantity, product1);
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product3Quantity, product3);
+
         int numberOfProducts = 2;
 
         assertEquals(numberOfProducts, customer1.getCart().size());
-
-
     }
 
     @Test
@@ -68,12 +68,11 @@ class CustomerTest {
         int product2bisQuantity = 1;
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product2bisQuantity, product2);
-        int totalQuantity = product2Quantity + product2bisQuantity;
 
+        int totalQuantity = product2Quantity + product2bisQuantity;
         int product2CartQuantity = customer1.getCart().get(product2);
 
         assertEquals(totalQuantity, product2CartQuantity);
-
     }
 
     @Test
@@ -110,7 +109,17 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductAbsentWhenRemovedFromCart() {
+    public void isProductAbsentWhenRemovedFromCart() throws InsufficientStockException {
+        Product product1 = products.get(0);
+        int product1Quantity = 10;
+        this.customer1.addToCart(product1Quantity, product1);
+        this.customer1.removeFromCart(product1Quantity, product1);
+
+        assertNull(customer1.getCart().get(product1));
+    }
+
+    @Test
+    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() {
 
     }
 

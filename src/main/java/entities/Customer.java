@@ -30,6 +30,10 @@ public class Customer extends Person {
         }
     }
 
+    public void removeFromCart(int quantity, Product product) {
+
+    }
+
     public String getEmail() {
         return email;
     }
