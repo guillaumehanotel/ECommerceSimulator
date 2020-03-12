@@ -120,7 +120,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductAbsentAfterRemovedFromCart() throws InsufficientStockException {
+    public void isProductAbsentAfterRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         this.customer1.addToCart(product1Quantity, product1);
@@ -130,7 +130,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() throws InsufficientStockException {
+    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         this.customer1.addToCart(product1Quantity, product1);

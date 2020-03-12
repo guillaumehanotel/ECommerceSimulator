@@ -1,6 +1,7 @@
 package entities;
 
 import exceptions.InsufficientStockException;
+import exceptions.ProductNotFoundInCartException;
 
 /**
  * Classe représentant un compte enregistré auprès du site marchand
@@ -30,7 +31,10 @@ public class Customer extends Person {
         }
     }
 
-    public void removeFromCart(int quantity, Product product) {
+    public void removeFromCart(int quantity, Product product) throws ProductNotFoundInCartException {
+        if(!cart.containsKey(product)) {
+            throw new ProductNotFoundInCartException();
+        }
         int leftQuantity = cart.get(product) - quantity;
         if(leftQuantity <= 0) {
             cart.remove(product);
