@@ -22,7 +22,7 @@ public class Customer extends Person {
 
     public void addToCart(int quantity, Product product) {
         if(quantity>0) {
-            cart.put(product, quantity);
+            cart.put(product, cart.getOrDefault(product, 0)+quantity);
         }
     }
 
