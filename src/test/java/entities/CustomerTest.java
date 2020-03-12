@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
 
     @Test
-    public void isCartSumEqualToPriceSumOfProductsWhenProductAddedToCart() {
+    public void isCartSumShouldBeEqualToPriceSumOfProductsWhenProductAddedToCart() {
 
     }
 
@@ -16,7 +16,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityIncrementWhenProductAddMultipleTimes() {
+    public void isProductQuantityIncrementedWhenProductAddMultipleTimes() {
 
     }
 
@@ -36,7 +36,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isCartNotEmptyWhenValidateCart() {
+    public void isCartNotEmptyWhenStartValidateCart() {
 
     }
 
@@ -46,7 +46,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isCartEmptyWhenValidateCart() {
+    public void isCartEmptyAfterValidateCart() {
 
     }
 
