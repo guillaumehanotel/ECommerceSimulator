@@ -21,7 +21,7 @@ public class Customer extends Person {
     }
 
     public void addToCart(int quantity, Product product) {
-        if(quantity>0) {
+        if(quantity>0 && quantity<= Product.MAX_QUANTITY) {
             cart.put(product, cart.getOrDefault(product, 0)+quantity);
         }
     }
