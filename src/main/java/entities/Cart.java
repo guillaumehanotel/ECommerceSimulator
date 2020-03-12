@@ -6,5 +6,7 @@ import java.util.List;
 
 public class Cart extends HashMap<Product, Integer> {
 
-    public Cart() {}
+    public Cart() {
+
+    }
 }
