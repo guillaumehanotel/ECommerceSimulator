@@ -37,11 +37,24 @@ class CustomerTest {
         for (Map.Entry<Product, Integer> entry : this.customer1.getCart().entrySet()) {
             totalCartPrice += entry.getKey().getPrice() * entry.getValue();
         }
-        assertEquals(totalCartPrice, totalProductPrice);
+        assertEquals(totalProductPrice, totalCartPrice);
     }
 
     @Test
     public void isQuantityHigherThanZeroWhenProductAddedToCart() {
+        Product product1 = products.get(0);
+        int product1Quantity = 3;
+        Product product2 = products.get(1);
+        int product2Quantity = 2;
+        Product product3 = products.get(2);
+        int product3Quantity = 0;
+        this.customer1.addToCart(product1Quantity, product1);
+        this.customer1.addToCart(product2Quantity, product2);
+        this.customer1.addToCart(product3Quantity, product3);
+        int numberOfProducts = 2;
+
+        assertEquals(numberOfProducts, customer1.getCart().size());
+
 
     }
 
