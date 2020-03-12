@@ -119,8 +119,17 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() {
+    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() throws InsufficientStockException {
+        Product product1 = products.get(0);
+        int product1Quantity = 10;
+        this.customer1.addToCart(product1Quantity, product1);
 
+        int removedQuantity = 6;
+        this.customer1.removeFromCart(removedQuantity, product1);
+
+        Integer expectedLeftQuantity = product1Quantity - removedQuantity;
+
+        assertEquals(expectedLeftQuantity, customer1.getCart().get(product1));
     }
 
     @Test
