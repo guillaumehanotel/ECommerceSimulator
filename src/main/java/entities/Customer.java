@@ -2,8 +2,6 @@ package entities;
 
 import exceptions.InsufficientStockException;
 
-import java.util.List;
-
 /**
  * Classe représentant un compte enregistré auprès du site marchand
  */
@@ -23,11 +21,12 @@ public class Customer extends Person {
     }
 
     public void addToCart(int quantity, Product product) throws InsufficientStockException {
-        if(quantity>product.getStock()){
+        int updatedQuantity = cart.getOrDefault(product, 0) + quantity;
+        if (updatedQuantity > product.getStock()) {
             throw new InsufficientStockException();
         }
-        if(quantity>0 && quantity<= Product.MAX_QUANTITY) {
-            cart.put(product, cart.getOrDefault(product, 0)+quantity);
+        if (updatedQuantity > 0 && quantity <= Product.MAX_QUANTITY) {
+            cart.put(product, updatedQuantity);
         }
     }
 
