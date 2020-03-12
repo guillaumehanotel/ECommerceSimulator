@@ -31,7 +31,12 @@ public class Customer extends Person {
     }
 
     public void removeFromCart(int quantity, Product product) {
-        cart.remove(product);
+        int leftQuantity = cart.get(product) - quantity;
+        if(leftQuantity <= 0) {
+            cart.remove(product);
+        } else {
+            cart.put(product, leftQuantity);
+        }
     }
 
     public String getEmail() {
