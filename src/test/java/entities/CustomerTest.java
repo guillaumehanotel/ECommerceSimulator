@@ -32,7 +32,7 @@ class CustomerTest {
         this.customer1.addToCart(product2Quantity, product2);
         this.customer1.addToCart(product3Quantity, product3);
 
-        double totalProductPrice = (product1.getPrice() * product2Quantity) + (product2.getPrice() * product2Quantity) + (product3.getPrice() * product3Quantity);
+        double totalProductPrice = (product1.getPrice() * product1Quantity) + (product2.getPrice() * product2Quantity) + (product3.getPrice() * product3Quantity);
         double totalCartPrice = 0.0;
         for (Map.Entry<Product, Integer> entry : this.customer1.getCart().entrySet()) {
             totalCartPrice += entry.getKey().getPrice() * entry.getValue();

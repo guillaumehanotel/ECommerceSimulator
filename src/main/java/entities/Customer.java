@@ -21,7 +21,7 @@ public class Customer extends Person {
     }
 
     public void addToCart(int quantity, Product product) {
-
+        cart.put(product, quantity);
     }
 
     public String getEmail() {
