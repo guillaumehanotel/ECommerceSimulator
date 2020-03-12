@@ -15,6 +15,7 @@ public class Customer extends Person {
     private String pseudo;
     private String password;
     private ShoppingCart shoppingCart;
+    private List<Order> currentOrders;
     private List<Order> ordersHistory;
 
     public Customer(String lastname, String firstname, String email, String pseudo, String password) {
@@ -46,6 +47,10 @@ public class Customer extends Person {
         } else {
             shoppingCart.put(product.getId(), new LineItem(leftQuantity, product));
         }
+    }
+
+    public void makeOrder() {
+
     }
 
     public ShoppingCart getShoppingCart() {

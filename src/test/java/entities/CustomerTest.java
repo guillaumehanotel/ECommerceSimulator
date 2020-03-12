@@ -26,7 +26,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isCartSumShouldBeEqualToPriceSumOfProductsWhenProductAddedToCart() throws InsufficientStockException {
+    public void cartShoppingSum_ShouldBeEqualTo_SumOfProductsPrice_WhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 3;
         Product product2 = products.get(1);
@@ -48,7 +48,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isQuantityHigherThanZeroWhenProductAddedToCart() throws InsufficientStockException {
+    public void productQuantity_ShouldBeHigherThan_Zero_WhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 3;
         Product product2 = products.get(1);
@@ -66,7 +66,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityIncrementedWhenProductAddMultipleTimes() throws InsufficientStockException {
+    public void productQuantity_ShouldBe_Incremented_WhenProductAddedMultipleTimes() throws InsufficientStockException {
         Product product2 = products.get(1);
         int product2Quantity = 2;
         int product2bisQuantity = 1;
@@ -80,7 +80,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isQuantityNotHigherThanMaxQuantityWhenProductAddedToCart() throws InsufficientStockException {
+    public void productQuantity_ShouldNotBeHigherThan_MaxQuantity_WhenProductAddedToCart() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 50;
         this.customer1.addToCart(product1Quantity, product1);
@@ -90,7 +90,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isExceptionRaisedWhenQuantityIsHigherThanStockQuantityWhenProductAddedToCart() {
+    public void exception_ShouldBeRaised_WhenQuantityIsHigherThanStockQuantity_WhenProductAddedToCart() {
         Product product1 = products.get(0);
         int product1Quantity = 16;
 
@@ -98,7 +98,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isExceptionRaisedWhenTotalQuantityIsHigherThanStockQuantityWhenProductAddedToCartMultipleTimes() throws InsufficientStockException {
+    public void exception_ShouldBeRaised_WhenTotalQuantityIsHigherThanStockQuantity_WhenProductAddedToCartMultipleTimes() throws InsufficientStockException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         int product1BisQuantity = 10;
@@ -109,7 +109,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductPresentBeforeRemovedFromCart() {
+    public void product_ShouldBe_Present_BeforeRemovedFromCart() {
         Product product1 = products.get(0);
         int product1Quantity = 10;
 
@@ -117,7 +117,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductAbsentAfterRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
+    public void product_ShouldBe_Absent_AfterRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         this.customer1.addToCart(product1Quantity, product1);
@@ -127,7 +127,7 @@ class CustomerTest {
     }
 
     @Test
-    public void isProductQuantityDecrementedWhenPartiallyRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
+    public void productQuantity_ShouldBe_Decremented_WhenPartiallyRemovedFromCart() throws InsufficientStockException, ProductNotFoundInCartException {
         Product product1 = products.get(0);
         int product1Quantity = 10;
         this.customer1.addToCart(product1Quantity, product1);
@@ -140,24 +140,23 @@ class CustomerTest {
         assertEquals(expectedLeftQuantity, customer1.getShoppingCart().get(product1.getId()).getQuantity());
     }
 
-//    @Test
-//    public void isCartNotEmptyWhenStartValidateCart() {
-//        assertThrows(EmptyCartException.class, () -> customer1.makeOrder(null, null));
-//    }
-//
-//    @Test
-//    public void isAddressFilledWhenValidateCart() {
-//
-//    }
-//
-//    @Test
-//    public void isCartEmptyAfterValidateCart() {
-//
-//    }
-//
-//    @Test
-//    public void isCommandCorrectWhenValidateCart() {
-//
-//    }
+    @Test
+    public void cart_ShouldNotBe_Empty_WhenMakeOrder() {
+    }
+
+    @Test
+    public void addresses_ShouldBe_Filled_WhenMakeOrder() {
+
+    }
+
+    @Test
+    public void cart_ShouldBe_Empty_AfterMakeOrder() {
+
+    }
+
+    @Test
+    public void order_ShouldBe_Created_AfterMakeOrder() {
+
+    }
 
 }
