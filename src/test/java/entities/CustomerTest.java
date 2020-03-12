@@ -75,7 +75,12 @@ class CustomerTest {
 
     @Test
     public void isQuantityNotHigherThanMaxQuantityWhenProductAddedToCart() {
+        Product product1 = products.get(0);
+        int product1Quantity = 50;
+        this.customer1.addToCart(product1Quantity, product1);
+        int expectedCartSize=0;
 
+        assertEquals(expectedCartSize, customer1.getCart().size());
     }
 
     @Test

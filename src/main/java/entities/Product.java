@@ -7,6 +7,7 @@ public class Product {
     private double price;
     private String description;
     private int stock;
+    public static final int MAX_QUANTITY=30;
 
     public Product(int id, String title, double price, String description, int stock) {
         this.id = id;
