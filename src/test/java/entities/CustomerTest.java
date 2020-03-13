@@ -171,12 +171,12 @@ class CustomerTest {
 
     @Test
     public void cart_ShouldBe_Empty_AfterMakeOrder() throws InsufficientStockException, EmptyCartException, EmptyAddressesException {
-//        Product product1 = products.get(0);
-//        this.customer2.addToCart(10, product1);
-//        this.customer2.makeOrder();
-//
-//        int expectedProductQuantityInCart = 0;
-//        assertEquals(expectedProductQuantityInCart, this.customer2.getShoppingCart().size());
+        Product product1 = products.get(0);
+        this.customer2.addToCart(10, product1);
+        this.customer2.makeOrder();
+
+        int expectedProductQuantityInCart = 0;
+        assertEquals(expectedProductQuantityInCart, this.customer2.getShoppingCart().size());
     }
 
 
