@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.EmptyAddressesException;
 import exceptions.EmptyCartException;
 import exceptions.InsufficientStockException;
 import exceptions.ProductNotFoundInCartException;
@@ -22,7 +23,8 @@ class CustomerTest {
             add(new Product("PQ", 1.49, "Attention à la pénurie", 2));
         }};
 
-        this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny", "toto1234");
+        this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny");
+        this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny");
     }
 
     @Test
@@ -146,8 +148,11 @@ class CustomerTest {
     }
 
     @Test
-    public void addresses_ShouldBe_Filled_WhenMakeOrder() {
-
+    public void exception_ShouldBeRaised_WhenCustomerAddressesAreEmpty_WhenMakeOrder() throws InsufficientStockException {
+        Product product1 = products.get(0);
+        int product1Quantity = 10;
+        this.customer1.addToCart(product1Quantity, product1);
+        assertThrows(EmptyAddressesException.class, () -> customer1.makeOrder());
     }
 
     @Test

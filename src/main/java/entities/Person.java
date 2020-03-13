@@ -4,7 +4,6 @@ public class Person {
 
     private String lastname;
     private String firstname;
-    private String address;
 
     public Person(String lastname, String firstname) {
         this.lastname = lastname;
@@ -27,11 +26,4 @@ public class Person {
         this.firstname = firstname;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

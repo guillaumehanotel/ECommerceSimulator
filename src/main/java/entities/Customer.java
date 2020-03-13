@@ -15,15 +15,17 @@ public class Customer extends Person {
     private String email;
     private String pseudo;
     private String password;
+    private String shippingAddress;
+    private String billingAddress;
+
     private ShoppingCart shoppingCart;
     private List<Order> currentOrders;
     private List<Order> ordersHistory;
 
-    public Customer(String lastname, String firstname, String email, String pseudo, String password) {
+    public Customer(String lastname, String firstname, String email, String pseudo) {
         super(lastname, firstname);
         this.email = email;
         this.pseudo = pseudo;
-        this.password = password;
         this.shoppingCart = new ShoppingCart();
         this.ordersHistory = new ArrayList<>();
     }
@@ -39,11 +41,11 @@ public class Customer extends Person {
     }
 
     public void removeFromCart(int quantity, Product product) throws ProductNotFoundInCartException {
-        if(!shoppingCart.containsKey(product.getId())) {
+        if (!shoppingCart.containsKey(product.getId())) {
             throw new ProductNotFoundInCartException();
         }
         int leftQuantity = shoppingCart.get(product.getId()).getQuantity() - quantity;
-        if(leftQuantity <= 0) {
+        if (leftQuantity <= 0) {
             shoppingCart.remove(product.getId());
         } else {
             shoppingCart.put(product.getId(), new LineItem(leftQuantity, product));
@@ -51,7 +53,7 @@ public class Customer extends Person {
     }
 
     public void makeOrder() throws EmptyCartException {
-        if(shoppingCart.isEmpty())
+        if (shoppingCart.isEmpty())
             throw new EmptyCartException();
 
     }
@@ -60,4 +62,11 @@ public class Customer extends Person {
         return shoppingCart;
     }
 
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
 }
