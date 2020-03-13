@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
     private List<Product> products;
     private Customer customer1;
+    private Customer customer2;
 
     public CustomerTest() {
         this.products = new ArrayList<Product>() {{
@@ -23,8 +24,13 @@ class CustomerTest {
             add(new Product("PQ", 1.49, "Attention à la pénurie", 2));
         }};
 
+        // Client sans adresses
         this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny");
-        this.customer1 = new Customer("Doe", "John", "johndoe@gmail.com", "johnny");
+
+        // Client avec adresses
+        this.customer2 = new Customer("Dupont", "Pierre", "pierredupont@gmail.com", "pirdu");
+        this.customer2.setBillingAddress("2 plaine du caillou, Fumel");
+        this.customer2.setShippingAddress("2 plaine du caillou, Fumel");
     }
 
     @Test
@@ -150,19 +156,29 @@ class CustomerTest {
     @Test
     public void exception_ShouldBeRaised_WhenCustomerAddressesAreEmpty_WhenMakeOrder() throws InsufficientStockException {
         Product product1 = products.get(0);
-        int product1Quantity = 10;
-        this.customer1.addToCart(product1Quantity, product1);
+        this.customer1.addToCart(10, product1);
         assertThrows(EmptyAddressesException.class, () -> customer1.makeOrder());
     }
 
     @Test
-    public void cart_ShouldBe_Empty_AfterMakeOrder() {
-
+    public void newOrder_ShouldBe_Created_AfterMakeOrder() throws InsufficientStockException, EmptyCartException, EmptyAddressesException {
+        Product product1 = products.get(0);
+        this.customer2.addToCart(10, product1);
+        this.customer2.makeOrder();
+        int expectedOrderNumber = 1;
+        assertEquals(expectedOrderNumber, customer2.getCurrentOrders().size());
     }
 
     @Test
-    public void order_ShouldBe_Created_AfterMakeOrder() {
-
+    public void cart_ShouldBe_Empty_AfterMakeOrder() throws InsufficientStockException, EmptyCartException, EmptyAddressesException {
+//        Product product1 = products.get(0);
+//        this.customer2.addToCart(10, product1);
+//        this.customer2.makeOrder();
+//
+//        int expectedProductQuantityInCart = 0;
+//        assertEquals(expectedProductQuantityInCart, this.customer2.getShoppingCart().size());
     }
+
+
 
 }

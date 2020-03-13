@@ -28,6 +28,7 @@ public class Customer extends Person {
         this.email = email;
         this.pseudo = pseudo;
         this.shoppingCart = new ShoppingCart();
+        this.currentOrders = new ArrayList<>();
         this.ordersHistory = new ArrayList<>();
     }
 
@@ -71,5 +72,13 @@ public class Customer extends Person {
 
     public void setBillingAddress(String billingAddress) {
         this.billingAddress = billingAddress;
+    }
+
+    public List<Order> getCurrentOrders() {
+        return currentOrders;
+    }
+
+    public List<Order> getOrdersHistory() {
+        return ordersHistory;
     }
 }
