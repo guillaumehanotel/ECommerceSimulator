@@ -179,6 +179,4 @@ class CustomerTest {
         assertEquals(expectedProductQuantityInCart, this.customer2.getShoppingCart().size());
     }
 
-
-
 }

@@ -59,10 +59,10 @@ public class Customer extends Person {
             throw new EmptyCartException();
         if (shippingAddress == null && billingAddress == null)
             throw new EmptyAddressesException();
-
         this.currentOrders.add(new Order(
                 this.shippingAddress, this.getShoppingCart()
         ));
+        this.getShoppingCart().clear();
     }
 
     public ShoppingCart getShoppingCart() {
