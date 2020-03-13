@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.EmptyAddressesException;
 import exceptions.EmptyCartException;
 import exceptions.InsufficientStockException;
 import exceptions.ProductNotFoundInCartException;
@@ -52,9 +53,11 @@ public class Customer extends Person {
         }
     }
 
-    public void makeOrder() throws EmptyCartException {
+    public void makeOrder() throws EmptyCartException, EmptyAddressesException {
         if (shoppingCart.isEmpty())
             throw new EmptyCartException();
+        if (shippingAddress == null && billingAddress == null)
+            throw new EmptyAddressesException();
 
     }
 
