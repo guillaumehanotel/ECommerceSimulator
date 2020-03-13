@@ -141,7 +141,8 @@ class CustomerTest {
     }
 
     @Test
-    public void cart_ShouldNotBe_Empty_WhenMakeOrder() {
+    public void exception_ShouldBeRaised_WhenCartIsEmpty_WhenMakeOrder() {
+        assertThrows(ProductNotFoundInCartException.class, () -> customer1.makeOrder());
     }
 
     @Test
